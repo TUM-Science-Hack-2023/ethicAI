@@ -1,7 +1,7 @@
 import streamlit as st
 
 
-class Info:
+class InfoSection:
     
     def __init__(self) -> None:
         pass

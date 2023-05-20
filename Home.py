@@ -5,7 +5,7 @@ from streamlit_extras.colored_header import colored_header
 
 from components.chat_bot import ChatBot
 from components.solution_prototype import SolutionPrototype
-
+from components.info_section import InfoSection
 
 
 # SETUP SESSION STATE
@@ -15,11 +15,14 @@ if "chat_bot" not in st.session_state:
     st.session_state["chat_bot"] = ChatBot()
 if "solution_prototype" not in st.session_state:
     st.session_state["solution_prototype"] = SolutionPrototype()
-
+if "info_section" not in st.session_state:
+    st.session_state["info_section"] = InfoSection()
+    
 # SETUP FOR THIS RENDER
 
 chat_bot = st.session_state["chat_bot"]
 solution_prototype = st.session_state["solution_prototype"]
+info_section = st.session_state["info_section"]
 
 # SETUP PAGE INFO
 
