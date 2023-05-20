@@ -69,7 +69,7 @@ class SolutionPrototype:
         self.solution_bullet_points.append(solution)
         
     def update_ethics_radar(self):
-        for
+        pass
         
     def make_ethics_radar(self):
         """6 ethical dimensions."""

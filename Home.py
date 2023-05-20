@@ -47,6 +47,7 @@ add_vertical_space(3)
 st.markdown("# Evaluation")
 st.markdown("See how ethical your solution is and how it can be improved.")
 
+
 solution_prototype.render()
 
 
