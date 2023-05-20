@@ -9,28 +9,28 @@ from components.solution_prototype import SolutionPrototype
 from components.info_section import InfoSection
 
 
-def add_logo():
-    st.markdown(
-        """
-        <style>
-            [data-testid="stSidebarNav"] {
-                background-image: url(http://placekitten.com/200/200);
-                background-repeat: no-repeat;
-                padding-top: 120px;
-                background-position: 20px 20px;
-            }
-            [data-testid="stSidebarNav"]::before {
-                content: "My Company Name";
-                margin-left: 20px;
-                margin-top: 20px;
-                font-size: 30px;
-                position: relative;
-                top: 100px;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+# def add_logo():
+#     st.markdown(
+#         """
+#         <style>
+#             [data-testid="stSidebarNav"] {
+#                 background-image: url(https://github.com/TUM-Science-Hack-2023/ethicAI/blob/main/media/logo.jpg?raw=true);
+#                 background-repeat: no-repeat;
+#                 padding-top: 120px;
+#                 background-position: 20px 20px;
+#             }
+#             [data-testid="stSidebarNav"]::before {
+#                 content: "My Company Name";
+#                 margin-left: 20px;
+#                 margin-top: 20px;
+#                 font-size: 30px;
+#                 position: relative;
+#                 top: 100px;
+#             }
+#         </style>
+#         """,
+#         unsafe_allow_html=True,
+#     )
 
 
 # SETUP SESSION STATE
@@ -54,12 +54,12 @@ st.set_page_config(
     page_title="EthicAI - Demo",
     page_icon=":robot:"
 )
-# add_logo("media/logo.jpeg", height=300)
-add_logo()
 st.sidebar.header("EthicAI")
 with st.sidebar:
-    add_vertical_space(3)
-st.sidebar.write("# Welcome to EthicAI! 👋")
+    add_logo("media/logo.jpg", height=200)
+    st.write("# Welcome to EthicAI! 👋")
+    add_vertical_space(5)
+    st.markdown("""Authors:\n- Altay Kacan\n- Dominika ...\n- Razin ....\n- Philipp Wulff\n""")
 
 
 # RENDER THE PAGE
