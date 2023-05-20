@@ -68,8 +68,16 @@ class SolutionPrototype:
     def append_solution(self, solution):
         self.solution_bullet_points.append(solution)
         
+    def concat_bullet_points(self):
+        free_text = ["- " + _ for _ in self.solution_bullet_points]
+        free_text = "\n".join(free_text)
+        return free_text
+        
     def update_ethics_radar(self):
-        pass
+        free_text = self.concat_bullet_points()
+        for dim, dim_dict in self.ethics_dimensions:
+            
+            response_dict = dim_dict["expert_bot"].get_evaluation()
         
     def make_ethics_radar(self):
         """6 ethical dimensions."""
