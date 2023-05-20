@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from streamlit_extras.colored_header import colored_header
+from streamlit_extras.app_logo import add_logo
 
 
 from components.chat_bot import ChatBot
@@ -22,7 +23,6 @@ if "info_section" not in st.session_state:
 
 chat_bot = st.session_state["chat_bot"]
 solution_prototype = st.session_state["solution_prototype"]
-info_section = st.session_state["info_section"]
 
 # SETUP PAGE INFO
 
@@ -31,7 +31,12 @@ st.set_page_config(
     page_icon=":robot:"
 )
 st.sidebar.header("EthicAI")
-st.sidebar.write("# Welcome to EthicAI! 👋")
+with st.sidebar:
+    add_logo("media/logo.jpg", height=200)
+    st.write("# Welcome to EthicAI! 👋")
+    add_vertical_space(5)
+    st.markdown("""Authors:\n- Altay Kacan\n- Dominika ...\n- Razin ....\n- Philipp Wulff\n""")
+
 
 # RENDER THE PAGE
 
@@ -47,7 +52,4 @@ add_vertical_space(3)
 st.markdown("# Evaluation")
 st.markdown("See how ethical your solution is and how it can be improved.")
 
-
 solution_prototype.render()
-
-
