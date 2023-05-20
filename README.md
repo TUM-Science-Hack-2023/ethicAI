@@ -11,4 +11,5 @@ pip3 install pandas
 pip3 install plotly
 
 pip3 install --upgrade openai
+pip install cohere
 ```
