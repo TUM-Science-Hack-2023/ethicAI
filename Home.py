@@ -6,7 +6,6 @@ from streamlit_extras.app_logo import add_logo
 
 from components.chat_bot import ChatBot
 from components.solution_prototype import SolutionPrototype
-from components.info_section import InfoSection
 
 
 # SETUP SESSION STATE
@@ -16,8 +15,6 @@ if "chat_bot" not in st.session_state:
     st.session_state["chat_bot"] = ChatBot()
 if "solution_prototype" not in st.session_state:
     st.session_state["solution_prototype"] = SolutionPrototype()
-if "info_section" not in st.session_state:
-    st.session_state["info_section"] = InfoSection()
     
 # SETUP FOR THIS RENDER
 

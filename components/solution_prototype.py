@@ -17,33 +17,33 @@ class SolutionPrototype:
         self.solution_bullet_points_to_pop = []
         # 6 ethical dimensions
         self.ethics_dimensions = {
-            "inclusive": {
-                "expert_bot": ExpertBot("inclusive"),
+            "child": {
+                "expert_bot": ExpertBot("child"),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
-                "display_name": "Inclusive Growth, Sustainable Development, and Well-being",
+                "display_name": "Child rights",
             },
             "human": {
                 "expert_bot": ExpertBot("human"),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
-                "display_name": "Human-centred Values and Fairness",
+                "display_name": "Human-centred Values & Fairness",
             },
             "transparency": {
                 "expert_bot": ExpertBot("transparency"),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
-                "display_name": "Transparency and Explainability",
+                "display_name": "Transparency & Explainability",
             },
             "robust": {
                 "expert_bot": ExpertBot("robust"),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
-                "display_name": "Robustness, Security, and Safety",
+                "display_name": "Robustness & Safety", # "Robustness, Security, and Safety"
             },
             "accountable": {
                 "expert_bot": ExpertBot("accountable"),
@@ -52,12 +52,12 @@ class SolutionPrototype:
                 "risk_short": "",
                 "display_name": "Accountability",
             },
-            "child": {
-                "expert_bot": ExpertBot("child"),
+            "inclusive": {
+                "expert_bot": ExpertBot("inclusive"),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
-                "display_name": "Child rights",
+                "display_name": "Inclusive Growth & Sustainable Devpt.", # "Inclusive Growth, Sustainable Development, and Well-being"
             },
         }
         
@@ -69,18 +69,40 @@ class SolutionPrototype:
         self.solution_bullet_points.append(solution)
         
     def concat_bullet_points(self):
+        """Output should be e.g.
+        - Using cameras in classroom to observe students
+        - Recognise violence and bullying in the classroom
+        - Surveillance of classroom settings
+        """
         free_text = ["- " + _ for _ in self.solution_bullet_points]
         free_text = "\n".join(free_text)
         return free_text
         
     def update_ethics_radar(self):
+        
         free_text = self.concat_bullet_points()
-        for dim, dim_dict in self.ethics_dimensions:
+        cnt = 0
+        successful_evals = 0
+        for dim, dim_dict in self.ethics_dimensions.items():
+            print("dim", dim)
+            try:
+                response_dict = dim_dict["expert_bot"].get_evaluation(free_text)
+                self.ethics_dimensions[dim]["score"] = dim_dict["expert_bot"].get_avg_from_responsedict(response_dict)
+                self.ethics_dimensions[dim]["risk"] = dim_dict["expert_bot"].get_full_detail(response_dict)
+                self.ethics_dimensions[dim]["risk_short"] = dim_dict["expert_bot"].get_short_summary(response_dict)
+            except Exception as e:
+                st.sidebar.error(f"Evaluation retrieval from expert:{dim} failed with error: {e}")
+                continue
             
-            response_dict = dim_dict["expert_bot"].get_evaluation(free_text)
-            self.ethics_dimensions[dim]["score"] = dim_dict["expert_bot"].get_avg_from_responsedict(response_dict)
-            self.ethics_dimensions[dim]["risk"] = dim_dict["expert_bot"].get_full_detail(response_dict)
-            self.ethics_dimensions[dim]["risk_short"] = dim_dict["expert_bot"].get_short_summary(response_dict)
+            successful_evals += 1
+            cnt += 1
+            if cnt == 2:
+                break
+        if successful_evals == len(self.ethics_dimensions):
+            st.sidebar.success("Calculated all ethics scores!")
+        elif successful_evals > 0:
+            st.sidebar.success("Calculated some ethics scores!")
+    
         
     def make_ethics_radar(self):
         """6 ethical dimensions."""
@@ -92,11 +114,9 @@ class SolutionPrototype:
 
         fig = go.Figure(data=data)
         fig.update_layout(
-            polar=dict(radialaxis=dict(visible=True),),
+            polar=dict(radialaxis=dict(visible=True, range=[0, 10]),),
             showlegend=False,
             font=dict(size=18),
-            
-
         )
         return fig
     

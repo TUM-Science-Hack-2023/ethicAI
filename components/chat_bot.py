@@ -74,7 +74,10 @@ class ChatBot:
 
         # Init chat history with system prompt
         self.chat_history.append({"role":"system", "content":self.system_prompt})
-        self.chat_history.append({"role": "assistant", "content": self.get_completion_from_history_dummy(messages=None)})
+        self.chat_history.append({
+            "role": "assistant", 
+            "content": "Hello! I'm an AI ideation assistant here to help you come up with AI use-cases for your classroom. What grade and subject do you teach? How can I assist you today? Please note that large language model based chatbots have limitations."
+        })
 
     def get_completion_from_history(self, messages, model="gpt-3.5-turbo", temperature=0):
         response = openai.ChatCompletion.create(
@@ -96,36 +99,16 @@ class ChatBot:
             'content': user_input
         })
         # do API call
-        # response = self.get_completion_from_history(self.chat_history)
+        try:
+            response = self.get_completion_from_history(self.chat_history)
+        except Exception as e:
+            st.sidebar.error(f"Retrieving the chatbot's response failed with error: {e}")
 
         # dummy response
-        response = self.get_completion_from_history_dummy(self.chat_history)
+        # response = self.get_completion_from_history_dummy(self.chat_history)
 
         self.chat_history.append({"role":"assistant", "content": response})
     
-    # def render(self):
-        
-    #     def user_msg(content):
-    #         # Possible avatar styles: https://github.com/AI-Yash/st-chat/issues/29#issuecomment-1547049574
-    #         message(content, is_user=True, avatar_style="adventurer")
-            
-    #     def bot_msg(content):
-    #         message(content, is_user=False, avatar_style="bottts")
-        
-    #     for msg in self.chat_history:
-    #         if msg["role"] == "user":
-    #             user_msg(msg["content"])
-    #         else:
-    #             user_msg(msg["content"])
-    #     # 
-    #     input_text = st.text_input("You: ", placeholder="Type here..." , key="chat_user_input")
-        
-    #     if input_text:
-    #         with st.spinner('Running Text2Text. Please wait...'):
-    #             self.step_chat(input_text)
-    
-    
-        
     def render(self, send_message_text_func=None):
         
         def user_msg(content, num):
