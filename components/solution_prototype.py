@@ -17,33 +17,33 @@ class SolutionPrototype:
         self.solution_bullet_points_to_pop = []
         # 6 ethical dimensions
         self.ethics_dimensions = {
-            "inclusive": {
-                "expert_bot": ExpertBot("inclusive"),
+            "child": {
+                "expert_bot": ExpertBot("child"),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
-                "display_name": "Inclusive Growth, Sustainable Development, and Well-being",
+                "display_name": "Child rights",
             },
             "human": {
                 "expert_bot": ExpertBot("human"),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
-                "display_name": "Human-centred Values and Fairness",
+                "display_name": "Human-centred Values & Fairness",
             },
             "transparency": {
                 "expert_bot": ExpertBot("transparency"),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
-                "display_name": "Transparency and Explainability",
+                "display_name": "Transparency & Explainability",
             },
             "robust": {
                 "expert_bot": ExpertBot("robust"),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
-                "display_name": "Robustness, Security, and Safety",
+                "display_name": "Robustness & Safety", # "Robustness, Security, and Safety"
             },
             "accountable": {
                 "expert_bot": ExpertBot("accountable"),
@@ -52,12 +52,12 @@ class SolutionPrototype:
                 "risk_short": "",
                 "display_name": "Accountability",
             },
-            "child": {
-                "expert_bot": ExpertBot("child"),
+            "inclusive": {
+                "expert_bot": ExpertBot("inclusive"),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
-                "display_name": "Child rights",
+                "display_name": "Inclusive Growth & Sustainable Devpt.", # "Inclusive Growth, Sustainable Development, and Well-being"
             },
         }
         
@@ -114,7 +114,7 @@ class SolutionPrototype:
 
         fig = go.Figure(data=data)
         fig.update_layout(
-            polar=dict(radialaxis=dict(visible=True),),
+            polar=dict(radialaxis=dict(visible=True, range=[0, 10]),),
             showlegend=False,
             font=dict(size=18),
         )
