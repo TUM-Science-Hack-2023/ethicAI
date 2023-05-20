@@ -77,7 +77,10 @@ class SolutionPrototype:
         free_text = self.concat_bullet_points()
         for dim, dim_dict in self.ethics_dimensions:
             
-            response_dict = dim_dict["expert_bot"].get_evaluation()
+            response_dict = dim_dict["expert_bot"].get_evaluation(free_text)
+            self.ethics_dimensions[dim]["score"] = dim_dict["expert_bot"].get_avg_from_responsedict(response_dict)
+            self.ethics_dimensions[dim]["risk"] = dim_dict["expert_bot"].get_full_detail(response_dict)
+            self.ethics_dimensions[dim]["risk_short"] = dim_dict["expert_bot"].get_short_summary(response_dict)
         
     def make_ethics_radar(self):
         """6 ethical dimensions."""

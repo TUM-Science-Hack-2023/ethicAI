@@ -9,30 +9,6 @@ from components.solution_prototype import SolutionPrototype
 from components.info_section import InfoSection
 
 
-# def add_logo():
-#     st.markdown(
-#         """
-#         <style>
-#             [data-testid="stSidebarNav"] {
-#                 background-image: url(https://github.com/TUM-Science-Hack-2023/ethicAI/blob/main/media/logo.jpg?raw=true);
-#                 background-repeat: no-repeat;
-#                 padding-top: 120px;
-#                 background-position: 20px 20px;
-#             }
-#             [data-testid="stSidebarNav"]::before {
-#                 content: "My Company Name";
-#                 margin-left: 20px;
-#                 margin-top: 20px;
-#                 font-size: 30px;
-#                 position: relative;
-#                 top: 100px;
-#             }
-#         </style>
-#         """,
-#         unsafe_allow_html=True,
-#     )
-
-
 # SETUP SESSION STATE
 # Called after a page load/refresh
 
