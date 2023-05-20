@@ -69,18 +69,40 @@ class SolutionPrototype:
         self.solution_bullet_points.append(solution)
         
     def concat_bullet_points(self):
+        """Output should be e.g.
+        - Using cameras in classroom to observe students
+        - Recognise violence and bullying in the classroom
+        - Surveillance of classroom settings
+        """
         free_text = ["- " + _ for _ in self.solution_bullet_points]
         free_text = "\n".join(free_text)
         return free_text
         
     def update_ethics_radar(self):
+        
         free_text = self.concat_bullet_points()
-        for dim, dim_dict in self.ethics_dimensions:
+        cnt = 0
+        successful_evals = 0
+        for dim, dim_dict in self.ethics_dimensions.items():
+            print("dim", dim)
+            try:
+                response_dict = dim_dict["expert_bot"].get_evaluation(free_text)
+                self.ethics_dimensions[dim]["score"] = dim_dict["expert_bot"].get_avg_from_responsedict(response_dict)
+                self.ethics_dimensions[dim]["risk"] = dim_dict["expert_bot"].get_full_detail(response_dict)
+                self.ethics_dimensions[dim]["risk_short"] = dim_dict["expert_bot"].get_short_summary(response_dict)
+            except Exception as e:
+                st.sidebar.error(f"Evaluation retrieval from expert:{dim} failed with error: {e}")
+                continue
             
-            response_dict = dim_dict["expert_bot"].get_evaluation(free_text)
-            self.ethics_dimensions[dim]["score"] = dim_dict["expert_bot"].get_avg_from_responsedict(response_dict)
-            self.ethics_dimensions[dim]["risk"] = dim_dict["expert_bot"].get_full_detail(response_dict)
-            self.ethics_dimensions[dim]["risk_short"] = dim_dict["expert_bot"].get_short_summary(response_dict)
+            successful_evals += 1
+            cnt += 1
+            if cnt == 2:
+                break
+        if successful_evals == len(self.ethics_dimensions):
+            st.sidebar.success("Calculated all ethics scores!")
+        elif successful_evals > 0:
+            st.sidebar.success("Calculated some ethics scores!")
+    
         
     def make_ethics_radar(self):
         """6 ethical dimensions."""
@@ -95,8 +117,6 @@ class SolutionPrototype:
             polar=dict(radialaxis=dict(visible=True),),
             showlegend=False,
             font=dict(size=18),
-            
-
         )
         return fig
     

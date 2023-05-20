@@ -96,10 +96,10 @@ class ChatBot:
             'content': user_input
         })
         # do API call
-        # response = self.get_completion_from_history(self.chat_history)
+        response = self.get_completion_from_history(self.chat_history)
 
         # dummy response
-        response = self.get_completion_from_history_dummy(self.chat_history)
+        # response = self.get_completion_from_history_dummy(self.chat_history)
 
         self.chat_history.append({"role":"assistant", "content": response})
     
