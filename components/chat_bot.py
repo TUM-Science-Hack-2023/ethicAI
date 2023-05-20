@@ -42,8 +42,9 @@ class ChatBot:
         response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
-        temperature=temperature, # this is the degree of randomness of the model's output
-    )
+        temperature=temperature, )# this is the degree of randomness of the model's output
+
+        return response.choices[0].message["content"]
         
     def get_completion_from_history_dummy(self, messages, model=None, temperature=0):
         answers = ["How does that make you feel?", "Hmmmm", "Can you tell me more about that?", "bruh", "LOL"]
