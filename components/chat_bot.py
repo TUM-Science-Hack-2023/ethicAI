@@ -69,13 +69,21 @@ class ChatBot:
     
     def render(self):
         
-        for msg in self.chat_history:
-            msg_role = msg["role"]
-            msg_content = msg["content"]
-            message(msg_content, is_user=msg_role=="user")
+        def user_msg(content):
+            # Possible avatar styles: https://github.com/AI-Yash/st-chat/issues/29#issuecomment-1547049574
+            message(content, is_user=True, avatar_style="adventurer")
+            
+        def bot_msg(content):
+            message(content, is_user=False, avatar_style="bottts")
         
+        for msg in self.chat_history:
+            if msg["role"] == "user":
+                user_msg(msg["content"])
+            else:
+                user_msg(msg["content"])
         # 
         input_text = st.text_input("You: ", placeholder="Type here..." , key="chat_user_input")
         
         if input_text:
-            self.step_chat(input_text)
+            with st.spinner('Running Text2Text. Please wait...'):
+                self.step_chat(input_text)
