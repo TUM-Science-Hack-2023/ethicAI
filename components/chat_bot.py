@@ -1,10 +1,14 @@
 import streamlit as st
+from streamlit_chat import message
 
 
 class ChatBot:
     
     def __init__(self) -> None:
-        pass
+        # List of Dicts
+        self.chat_history = []
     
-    def render():
-        pass
+    def render(self):
+        
+        message("My message") 
+        message("Hello bot!", is_user=True)     
