@@ -226,11 +226,15 @@ class ExpertBot():
         return  response_dict
 
 
-    def get_short_summary(self, text_to_summarize, model="gpt-3.5-turbo"):
+    def get_short_summary(self, response_dict, model="gpt-3.5-turbo"):
         """
-        This function expects to receive text_to_summarize as a string 
-        and returns a very brief summary of the given text
+        This function expects to receive the response_dict the get_evaluation
+        function returns and outputs a list containing a very brief summary of
+        the given text
         """
+        out = []
+
+        text_to_summarize = self.get_full_detail(response_dict)
 
         self.summary_prompt = f"""Extract the main ideas from the following text delimited by
         three backticks. Give your answer in no more than 50 characters.
@@ -247,6 +251,58 @@ class ExpertBot():
         )
 
         return response.choices[0].message["content"]
+
+    def get_avg_from_responsedict(self, response_dict):
+        """
+        Use this function to get the average score that the model returns
+        after calling get_evaluation method of this class.
+
+        The dictionary looks like this:
+
+        ```
+        {'Transparency': {'score': 4, 'explanation_and_possible_risks': 'The use 
+        case offers some level of transparency by describing the use of cameras 
+        to observe students and recognise violence and bullying in the classroom.
+        However, it lacks comprehensive explanations of the decision-making 
+        processes and underlying algorithms used for surveillance. This 
+        lack of transparency could lead to concerns about privacy and
+        potential misuse of the technology.'}, 
+        'Explainability': {'score': 3, 'explanation_and_possible_risks': 'The use case fails
+        to provide any meaningful explanation of its decision-making
+        processes, making it difficult to understand its actions.
+        This lack of explainability could lead to concerns about
+        the accuracy and fairness of the surveillance system, 
+        as well as potential biases in the data used to train 
+        the AI algorithms.'}}
+        ```
+        """
+
+        keys = list(response_dict.keys())
+
+        total = 0
+
+        for key in keys:
+            response = response_dict[key]["score"]
+            total += response 
+
+        average = total / len(keys)
+
+        return average
+
+    def get_full_detail(self, response_dict):
+        """
+        This is just a nice-to-have function that can be used to get 
+        a full text description from the response_dict
+        """
+
+        keys = list(response_dict.keys())
+        response = ""
+        for key in keys:
+            response += key + ": " + response_dict[key]["explanation_and_possible_risks"] + "\n"
+
+        return response
+
+
 
     
 
