@@ -4,4 +4,4 @@ then import into other programs as a module. DON'T PUSH YOUR API KEY
 """
 
 COHERE_KEY = ""
-OPEN_AI_KEY = "bbbbb"
+OPEN_AI_KEY = "ccccccccccccccc"
