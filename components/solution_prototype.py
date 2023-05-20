@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_extras.chart_container import chart_container
 from streamlit_extras.colored_header import colored_header
+from components.expert_bot import ExpertBot
 
 import plotly.express as px
 import pandas as pd
@@ -15,18 +16,54 @@ class SolutionPrototype:
         self.solution_bullet_points = []
         self.solution_bullet_points_to_pop = []
         # 6 ethical dimensions
-        self.ethics_dimensions = {dim: {"score": 0, "risk": "", "risk_short": ""} for dim in [
-                "Inclusive Growth, Sustainable Development, and Well-being",
-                "Human-centred Values and Fairness",
-                "Transparency and Explainability",
-                "Robustness, Security, and Safety",
-                "Accountability",
-                "Child rights"
-            ]
+        self.ethics_dimensions = {
+            "inclusive": {
+                "expert_bot": ExpertBot("inclusive"),
+                "score": 0,
+                "risk": "",
+                "risk_short": "",
+                "display_name": "Inclusive Growth, Sustainable Development, and Well-being",
+            },
+            "human": {
+                "expert_bot": ExpertBot("human"),
+                "score": 0,
+                "risk": "",
+                "risk_short": "",
+                "display_name": "Human-centred Values and Fairness",
+            },
+            "transparency": {
+                "expert_bot": ExpertBot("transparency"),
+                "score": 0,
+                "risk": "",
+                "risk_short": "",
+                "display_name": "Transparency and Explainability",
+            },
+            "robust": {
+                "expert_bot": ExpertBot("robust"),
+                "score": 0,
+                "risk": "",
+                "risk_short": "",
+                "display_name": "Robustness, Security, and Safety",
+            },
+            "accountable": {
+                "expert_bot": ExpertBot("accountable"),
+                "score": 0,
+                "risk": "",
+                "risk_short": "",
+                "display_name": "Accountability",
+            },
+            "child": {
+                "expert_bot": ExpertBot("child"),
+                "score": 0,
+                "risk": "",
+                "risk_short": "",
+                "display_name": "Child rights",
+            },
         }
         
         if not "solution_custom_text_input" in st.session_state:
             st.session_state["solution_custom_text_input"] = ""
+        
         
     def append_solution(self, solution):
         self.solution_bullet_points.append(solution)
@@ -38,7 +75,7 @@ class SolutionPrototype:
         """6 ethical dimensions."""
         data = go.Scatterpolar(
             r=[v["score"] for k, v in self.ethics_dimensions.items()],
-            theta=list(self.ethics_dimensions.keys()),
+            theta=[v["display_name"] for k, v in self.ethics_dimensions.items()],
             fill='toself'
         )
 
@@ -75,6 +112,7 @@ class SolutionPrototype:
             if text:
                 self.solution_bullet_points.append(text)
             st.session_state["solution_custom_text_input"] = ""
+            
         st.text_input(
             "Custom input", 
             placeholder="Add a detail to your idea here...", 
@@ -82,8 +120,10 @@ class SolutionPrototype:
             label_visibility="collapsed",
             key="solution_custom_text_input"
         )
+        
+        # EVAL BUTTON
         if self.solution_bullet_points:
-            st.button("Evaluate Ethics", on_click=..., key=f"solution_eval_ethics_button")
+            st.button("Evaluate Ethics", on_click=self.update_ethics_radar, key=f"solution_eval_ethics_button")
         
         colored_header(
             label="Risk Dimensions",
@@ -99,6 +139,6 @@ class SolutionPrototype:
             color_name="violet-70",
         )        
         for ethics_dim, risk_dict in self.ethics_dimensions.items():
-            st.markdown(f"**{ethics_dim}:**")
+            st.markdown(f"**{risk_dict['display_name']}:**")
             with st.expander(risk_dict['risk_short']):
                 st.write(risk_dict["risk"])
