@@ -11,7 +11,6 @@ DUMMY_CHAT_HISTORY =  [
     {'role':'user', 'content':'I don\'t know'}  
 ]
 
-
 class ChatBot: 
     def __init__(self) -> None:
         """
@@ -30,14 +29,15 @@ class ChatBot:
         'assistant'.
 
         """
-        self.system_prompt = """ """
+        self.system_prompt = """You are an assistant that speaks like Shakespeare."""
         
         # List of Dicts
         self.chat_history = []
 
         # Init chat history with system prompt
-        self.chat_history.append({"role":"system", "content":self.system_prompt})
-
+        self.chat_history.append({"role": "system", "content": self.system_prompt})
+        self.chat_history.append({"role": "assistant", "content": self.get_completion_from_history_dummy()})
+        
     def get_completion_from_history(self, messages, model="gpt-3.5-turbo", temperature=0):
         response = openai.ChatCompletion.create(
         model=model,
@@ -46,7 +46,7 @@ class ChatBot:
 
         return response.choices[0].message["content"]
         
-    def get_completion_from_history_dummy(self, messages, model=None, temperature=0):
+    def get_completion_from_history_dummy(self):
         answers = ["How does that make you feel?", "Hmmmm", "Can you tell me more about that?", "bruh", "LOL"]
         response = random.choice(answers)
 
@@ -61,27 +61,40 @@ class ChatBot:
         # response = self.get_completion_from_history(self.chat_history)
 
         # dummy response
-        response = self.get_completion_from_history_dummy(self.chat_history)
+        response = self.get_completion_from_history_dummy()
 
         self.chat_history.append({"role":"assistant", "content": response})
+        
     
-    def render(self):
+    def render(self, send_message_text_func=None):
         
-        def user_msg(content):
+        def user_msg(content, num):
             # Possible avatar styles: https://github.com/AI-Yash/st-chat/issues/29#issuecomment-1547049574
-            message(content, is_user=True, avatar_style="adventurer")
+            message(content, is_user=True, avatar_style="adventurer", key=f"user_msg_{num}")
             
-        def bot_msg(content):
-            message(content, is_user=False, avatar_style="bottts")
-        
-        for msg in self.chat_history:
+        def bot_msg(content, num):
+            col1, col2 = st.columns([1, 12])
+            with col1:
+                def on_click_func():
+                    send_message_text_func(content)
+                st.button("➕", help="Add this to your solution!", on_click=on_click_func if send_message_text_func else None, key=f"bot_msg_button_{num}")
+            with col2: 
+                message(content, is_user=False, avatar_style="bottts", key=f"bot_msg_{num}")
+            
+        for i, msg in enumerate(self.chat_history):
             if msg["role"] == "user":
-                user_msg(msg["content"])
-            else:
-                user_msg(msg["content"])
-        # 
-        input_text = st.text_input("You: ", placeholder="Type here..." , key="chat_user_input")
+                user_msg(msg["content"], i)
+            elif msg["role"] == "assistant":
+                bot_msg(msg["content"], i)
+                
         
-        if input_text:
-            with st.spinner('Running Text2Text. Please wait...'):
-                self.step_chat(input_text)
+        if not "chat_user_input" in st.session_state:
+            st.session_state["chat_user_input"] = ""
+            
+        def process_input(): 
+            self.step_chat(st.session_state["chat_user_input"])
+            st.session_state["chat_user_input"] = ""
+        
+        st.text_input("You:", placeholder="Type your response here...", on_change=process_input, key="chat_user_input")
+    
+            

@@ -1,9 +1,104 @@
 import streamlit as st
+from streamlit_extras.chart_container import chart_container
+from streamlit_extras.colored_header import colored_header
+
+import plotly.express as px
+import pandas as pd
+import plotly.graph_objects as go
+import copy
+
 
 class SolutionPrototype:
     
     def __init__(self) -> None:
+        self.solution_name = ""
+        self.solution_bullet_points = []
+        self.solution_bullet_points_to_pop = []
+        # 6 ethical dimensions
+        self.ethics_dimensions = {dim: {"score": 0, "risk": "", "risk_short": ""} for dim in [
+                "Inclusive Growth, Sustainable Development, and Well-being",
+                "Human-centred Values and Fairness",
+                "Transparency and Explainability",
+                "Robustness, Security, and Safety",
+                "Accountability",
+                "Child rights"
+            ]
+        }
+        
+        if not "solution_custom_text_input" in st.session_state:
+            st.session_state["solution_custom_text_input"] = ""
+        
+    def append_solution(self, solution):
+        self.solution_bullet_points.append(solution)
+        
+    def update_ethics_radar(self):
         pass
+        
+    def make_ethics_radar(self):
+        """6 ethical dimensions."""
+        data = go.Scatterpolar(
+            r=[v["score"] for k, v in self.ethics_dimensions.items()],
+            theta=list(self.ethics_dimensions.keys()),
+            fill='toself'
+        )
+
+        fig = go.Figure(data=data)
+        fig.update_layout(
+            polar=dict(radialaxis=dict(visible=True),),
+            showlegend=False,
+            font=dict(size=18),
+            
+
+        )
+        return fig
     
-    def render():
-        pass
+    def render(self):
+        
+        # Pop buttons that were clicked in the last iteration
+        for idx in self.solution_bullet_points_to_pop:
+            self.solution_bullet_points.pop(idx)
+        self.solution_bullet_points_to_pop = []
+        
+        for i, sbp in enumerate(self.solution_bullet_points):
+            col1, col2, col3 = st.columns([10, 1, 1])
+            with col1:
+                st.text_input("No-show", value=sbp, disabled=True, label_visibility="collapsed", key=f"solution_text_field_{i}")
+            with col2:
+                st.button("🖋️", key=f"solution_edit_button_{i}")
+            with col3:
+                if st.button("❌", key=f"solution_del_button_{i}"):
+                    self.solution_bullet_points_to_pop.append(i)
+
+        # Add a custom input button
+        def on_change_func():
+            text = st.session_state["solution_custom_text_input"]
+            if text:
+                self.solution_bullet_points.append(text)
+            st.session_state["solution_custom_text_input"] = ""
+        st.text_input(
+            "Custom input", 
+            placeholder="Add a detail to your idea here...", 
+            on_change=on_change_func, 
+            label_visibility="collapsed",
+            key="solution_custom_text_input"
+        )
+        if self.solution_bullet_points:
+            st.button("Evaluate Ethics", on_click=..., key=f"solution_eval_ethics_button")
+        
+        colored_header(
+            label="Risk Dimensions",
+            description="See how ethical your idea is within the 6 dimensions of ethics in AI.",
+            color_name="violet-70",
+        )   
+        # RENDER THE PLOTLY RADAR FIGURE
+        st.plotly_chart(self.make_ethics_radar(), use_container_width=True)
+
+        colored_header(
+            label="Identified Risks",
+            description="Read about the reasoning behind the measured risk scores.",
+            color_name="violet-70",
+        )        
+        for ethics_dim, risk_dict in self.ethics_dimensions.items():
+            st.markdown(f"**{ethics_dim}:**")
+            with st.expander(risk_dict['risk_short']):
+                st.write(risk_dict["risk"])
