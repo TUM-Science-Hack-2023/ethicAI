@@ -45,7 +45,7 @@ class ChatBot:
         temperature=temperature, # this is the degree of randomness of the model's output
     )
         
-    def get_completion_from_history_dummy(self, message, model=None, temperature=0):
+    def get_completion_from_history_dummy(self, messages, model=None, temperature=0):
         answers = ["How does that make you feel?", "Hmmmm", "Can you tell me more about that?", "bruh", "LOL"]
         response = random.choice(answers)
 
@@ -59,6 +59,12 @@ class ChatBot:
             'content': user_input
         })
         # do API call
+        # response = self.get_completion_from_history(self.chat_history)
+
+        # dummy response
+        response = self.get_completion_from_history_dummy(self.chat_history)
+
+        self.chat_history.append({"role":"assistant", "content": response})
     
     def render(self):
         
