@@ -51,8 +51,6 @@ class ChatBot:
         response = random.choice(answers)
 
         return response
-
-
         
     def step_chat(self, user_input: str):
         self.chat_history.append({
