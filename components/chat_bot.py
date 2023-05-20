@@ -4,7 +4,6 @@ import sys
 import random
 from streamlit_chat import message
 
-
 DUMMY_CHAT_HISTORY =  [  
     {'role':'system', 'content':'You are an assistant that speaks like Shakespeare.'},    
     {'role':'user', 'content':'tell me a joke'},   
