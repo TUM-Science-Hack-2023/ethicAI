@@ -15,6 +15,9 @@ The main principles that we are considering are:
 import openai
 import json
 import os
+import sys
+
+sys.path.append("..")
 from env import *
 
 # Get API key
