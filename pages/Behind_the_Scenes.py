@@ -19,8 +19,8 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 with st.sidebar:
     add_logo("media/logo.jpg", height=200)
-    add_vertical_space(14)
-    st.markdown("""**Authors:**\n- [Altay Kacan](https://www.linkedin.com/in/altay-kaçan-0383131a3/)\n- [Dominika G.]()\n- [Razin Abdullah](https://www.linkedin.com/in/razin-abdullah/)\n- [Philipp Wulff](https://www.linkedin.com/in/philippwulff/)\n""")
+    # add_vertical_space(14)
+    st.markdown("""**Authors:**\n- [Altay Kacan](https://www.linkedin.com/in/altay-kaçan-0383131a3/)\n- [Dominika Golebiewska](https://www.linkedin.com/in/dominika-g-230056181/)\n- [Razin Abdullah](https://www.linkedin.com/in/razin-abdullah/)\n- [Philipp Wulff](https://www.linkedin.com/in/philippwulff/)\n""")
 
 
 info_section.render()
