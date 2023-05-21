@@ -175,21 +175,11 @@ class ExpertBot():
         self.prompt = None
         self.summary_prompt = None
 
+        self.API_idx = API_idx
+
         # Cohere object
         self.co = cohere.Client(st.secrets["COHERE_KEY"])
 
-        if API_idx == 0:
-            key_name = "OPEN_AI_KEY"
-        elif API_idx == 1:
-            key_name = "OPEN_AI_KEY2"
-        elif API_idx == 2:
-            key_name = "OPEN_AI_KEY3"
-        elif API_idx == 3:
-            key_name == "OPEN_AI_KEY4"
-        else:
-            raise NotImplementedError
-        
-        openai.api_key  = st.secrets[key_name] 
 
     def get_evaluation(self, use_case, model="gpt-3.5-turbo"):
         """
@@ -198,6 +188,20 @@ class ExpertBot():
 
         The answer returned should be a JSON object (a python dictionary)
         """
+
+
+        if self.API_idx == 0:
+            key_name = "OPEN_AI_KEY"
+        elif self.API_idx == 1:
+            key_name = "OPEN_AI_KEY2"
+        elif self.API_idx == 2:
+            key_name = "OPEN_AI_KEY3"
+        elif self.API_idx == 3:
+            key_name == "OPEN_AI_KEY4"
+        else:
+            raise NotImplementedError
+        
+        openai.api_key  = st.secrets[key_name] 
         self.prompt = f"""
             Determine whether the given use case describing an use case of AI 
             delimited by three backticks is appropriate according to the 
@@ -283,6 +287,7 @@ class ExpertBot():
                                     length="short",
                                     format="paragraph",
                                     extractiveness="medium",
+                                    temperature=0,
                                     additional_command="Limit your answer to one sentence with less than 50 characters.")
         
         response = response.summary # extracts the string
