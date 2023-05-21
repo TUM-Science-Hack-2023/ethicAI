@@ -98,7 +98,8 @@ class SolutionPrototype:
                 self.ethics_dimensions[dim]["risk"] = dim_dict["expert_bot"].get_full_detail(response_dict)
                 self.ethics_dimensions[dim]["risk_short"] = dim_dict["expert_bot"].get_short_summary(response_dict)
             except Exception as e:
-                st.sidebar.error(f"Evaluation retrieval from expert:{dim} failed with error: {e}")
+                # st.sidebar.error(f"Evaluation retrieval from expert:{dim} failed with error: {e}")
+                st.sidebar.error(f"Evaluation retrieval from the {dim} expoert failed with error. Please try again.")
                 continue
             
             successful_evals += 1
