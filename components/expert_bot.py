@@ -16,6 +16,7 @@ import openai
 import json
 import os
 import sys
+import cohere 
 
 sys.path.append("..")
 from env import *
@@ -177,6 +178,9 @@ class ExpertBot():
         self.prompt = None
         self.summary_prompt = None
 
+        # Cohere object
+        self.co = cohere.Client(COHERE_KEY)
+
     def get_evaluation(self, use_case, model="gpt-3.5-turbo"):
         """
         This function is supposed to receive the use case and 
@@ -213,16 +217,25 @@ class ExpertBot():
 
         assert self.prompt is not None, f"Your prompt is empty in the expert system {self.expertise}!"
 
-        messages = [{"role": "user", "content": self.prompt}]
-        response = openai.ChatCompletion.create(
-            model=model,
-            messages=messages,
-            temperature=0, # this is the degree of randomness of the model's output
-        )
+        try:
+            messages = [{"role": "user", "content": self.prompt}]
+            response = openai.ChatCompletion.create(
+                model=model,
+                messages=messages,
+                temperature=0, # this is the degree of randomness of the model's output
+            )
 
-        # Returning the response as dictionary
-        response_str = response.choices[0].message["content"]
-        response_dict = json.loads(response_str)
+            # Returning the response as dictionary
+            response_str = response.choices[0].message["content"]
+            response_dict = json.loads(response_str)
+
+        except Exception as e:
+            response_dict = {"Please have some patience...":{
+                "score":0, 
+                "explanation_and_possible_risks":"""There are some rate limits 
+                with model usage. You can wait a couple of minutes then try again.
+                Ooooor, you can invest a couple of million dollars in us so we 
+                can get a nice and shiny production key"""}}
         return  response_dict
 
 
@@ -232,7 +245,6 @@ class ExpertBot():
         function returns and outputs a list containing a very brief summary of
         the given text
         """
-        out = []
 
         text_to_summarize = self.get_full_detail(response_dict)
 
@@ -251,6 +263,25 @@ class ExpertBot():
         )
 
         return response.choices[0].message["content"]
+
+    def get_short_summary_cohere(self, response_dict):
+        """
+        This is just a backup function that uses the Cohere API instead
+        of the OpenAI one just to avoid rate limits.
+        """
+
+        text_to_summarize = self.get_full_detail(response_dict)
+
+        response = self.co.summarize(text=text_to_summarize,
+                                     length="short",
+                                     format="paragraph",
+                                     extractiveness="low",
+                                     additional_command="Give your answer in no more than 50 characters")
+        
+        response = response.summary # extracts the string
+
+        return response
+
 
     def get_avg_from_responsedict(self, response_dict):
         """
