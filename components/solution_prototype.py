@@ -28,28 +28,28 @@ class SolutionPrototype:
                 "display_name": "Child rights",
             },
             "human": {
-                "expert_bot": ExpertBot("human", 0),
+                "expert_bot": ExpertBot("human", 1),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
                 "display_name": "Human-centred Values & Fairness",
             },
             "transparency": {
-                "expert_bot": ExpertBot("transparency", 1),
+                "expert_bot": ExpertBot("transparency", 2),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
                 "display_name": "Transparency & Explainability",
             },
             "robust": {
-                "expert_bot": ExpertBot("robust", 1),
+                "expert_bot": ExpertBot("robust", 0),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
                 "display_name": "Robustness & Safety", # "Robustness, Security, and Safety"
             },
             "accountable": {
-                "expert_bot": ExpertBot("accountable", 2),
+                "expert_bot": ExpertBot("accountable", 1),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
