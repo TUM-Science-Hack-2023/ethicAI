@@ -21,42 +21,42 @@ class SolutionPrototype:
         # 6 ethical dimensions
         self.ethics_dimensions = {
             "child": {
-                "expert_bot": ExpertBot("child"),
+                "expert_bot": ExpertBot("child", 0),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
                 "display_name": "Child rights",
             },
             "human": {
-                "expert_bot": ExpertBot("human"),
+                "expert_bot": ExpertBot("human", 0),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
                 "display_name": "Human-centred Values & Fairness",
             },
             "transparency": {
-                "expert_bot": ExpertBot("transparency"),
+                "expert_bot": ExpertBot("transparency", 0),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
                 "display_name": "Transparency & Explainability",
             },
             "robust": {
-                "expert_bot": ExpertBot("robust"),
+                "expert_bot": ExpertBot("robust", 1),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
                 "display_name": "Robustness & Safety", # "Robustness, Security, and Safety"
             },
             "accountable": {
-                "expert_bot": ExpertBot("accountable"),
+                "expert_bot": ExpertBot("accountable", 1),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
                 "display_name": "Accountability",
             },
             "inclusive": {
-                "expert_bot": ExpertBot("inclusive"),
+                "expert_bot": ExpertBot("inclusive", 1),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
@@ -96,10 +96,13 @@ class SolutionPrototype:
                 response_dict = dim_dict["expert_bot"].get_evaluation(free_text)
                 self.ethics_dimensions[dim]["score"] = dim_dict["expert_bot"].get_avg_from_responsedict(response_dict)
                 self.ethics_dimensions[dim]["risk"] = dim_dict["expert_bot"].get_full_detail(response_dict)
-                self.ethics_dimensions[dim]["risk_short"] = dim_dict["expert_bot"].get_short_summary(response_dict)
+                self.ethics_dimensions[dim]["risk_short"] = dim_dict["expert_bot"].get_short_summary_cohere(response_dict)
             except Exception as e:
                 # st.sidebar.error(f"Evaluation retrieval from expert:{dim} failed with error: {e}")
                 st.sidebar.error(f"Evaluation retrieval from the {dim} expoert failed with error. Please try again.")
+                self.ethics_dimensions[dim]["score"] = 0
+                self.ethics_dimensions[dim]["risk"] = "..."
+                self.ethics_dimensions[dim]["risk_short"] = "Please have some patience, there are rate limits on how many calls we can make..."
                 continue
             
             successful_evals += 1
@@ -141,7 +144,10 @@ class SolutionPrototype:
         for i, sbp in enumerate(self.solution_bullet_points):
             col1, col2, col3 = st.columns([10, 1, 1])
             with col1:
-                st.text_input("No-show", value=sbp, disabled=True, label_visibility="collapsed", key=f"solution_text_field_{i}")
+                if len(sbp) > 70:
+                    st.text_area("No-show", value=sbp, disabled=True, label_visibility="collapsed", key=f"solution_text_field_{i}")
+                else:
+                    st.text_input("No-show", value=sbp, disabled=True, label_visibility="collapsed", key=f"solution_text_field_{i}")
             with col2:
                 st.button("🖋️", key=f"solution_edit_button_{i}")
             with col3:

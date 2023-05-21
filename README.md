@@ -21,6 +21,7 @@ Secrets are the API keys needed to access the LLM APIs. To use them locally, cre
 
 ```toml
 # Everything in this section will be available as an environment variable
+# Use thse secret keys with st.secrets["OPEN_AI_KEY"]
 
 COHERE_KEY = "YOUR KEY GOES HERE"
 OPEN_AI_KEY = "YOUR KEY GOES HERE" 
