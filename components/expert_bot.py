@@ -245,41 +245,53 @@ class ExpertBot():
         function returns and outputs a list containing a very brief summary of
         the given text
         """
+        try:
+            text_to_summarize = self.get_full_detail(response_dict)
 
-        text_to_summarize = self.get_full_detail(response_dict)
+            self.summary_prompt = f"""Extract the main ideas from the following text delimited by
+            three backticks. Give your answer in no more than 50 characters.
 
-        self.summary_prompt = f"""Extract the main ideas from the following text delimited by
-        three backticks. Give your answer in no more than 50 characters.
+            ```
+            {text_to_summarize}
+            ```
+            """
+            messages = [{"role": "user", "content": self.summary_prompt}]
+            response = openai.ChatCompletion.create(
+                model=model,
+                messages=messages,
+                temperature=0, # this is the degree of randomness of the model's output
+            )
 
-        ```
-        {text_to_summarize}
-        ```
-        """
-        messages = [{"role": "user", "content": self.summary_prompt}]
-        response = openai.ChatCompletion.create(
-            model=model,
-            messages=messages,
-            temperature=0, # this is the degree of randomness of the model's output
-        )
+            response = response.choices[0].message["content"]
+        except Exception as e:
+            response = "Please have some patience, there are rate limits on how many calls we can make..."
 
-        return response.choices[0].message["content"]
+        return response
 
     def get_short_summary_cohere(self, response_dict):
         """
         This is just a backup function that uses the Cohere API instead
         of the OpenAI one just to avoid rate limits.
         """
+        try:
+            text_to_summarize = self.get_full_detail(response_dict)
 
-        text_to_summarize = self.get_full_detail(response_dict)
-
-        response = self.co.summarize(text=text_to_summarize,
-                                     length="short",
-                                     format="paragraph",
-                                     extractiveness="low",
-                                     additional_command="Give your answer in no more than 50 characters")
-        
-        response = response.summary # extracts the string
-
+            response = self.co.summarize(text=text_to_summarize,
+                                        length="short",
+                                        format="paragraph",
+                                        extractiveness="medium",
+                                        additional_command="Limit your answer to one sentence with less than 50 characters.")
+            
+            response = response.summary # extracts the string
+            
+            # prompt = f"""Summarize the following text delimited by
+            #  three backticks. Give your answer in no more than 50 characters.
+            #  ```{text_to_summarize}```"""
+            # response = self.co.generate(prompt=prompt,
+            #                             model="command-nightly",
+            #                             temperature=0)
+        except Exception as e:
+            response = "Please have some patience, there are rate limits on the calls we can make..."
         return response
 
 
