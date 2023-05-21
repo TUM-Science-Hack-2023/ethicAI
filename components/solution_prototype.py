@@ -67,6 +67,7 @@ class SolutionPrototype:
         for k in self.ethics_dimensions:
             self.ethics_dimensions[k]["score"] = 5
             self.ethics_dimensions[k]["risk_short"] = "Press the 'Evaluate' button to see what the experts think about your idea!"
+            self.ethics_dimensions[k]["risk"] = "..."
         
         self.solution_text_extractor = Extractor()
         

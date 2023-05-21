@@ -25,7 +25,7 @@ solution_prototype = st.session_state["solution_prototype"]
 
 st.set_page_config(
     page_title="EthicAI - Demo",
-    page_icon=":robot:"
+    page_icon="🤖"
 )
 with st.sidebar:
     add_logo("media/logo.jpg", height=200)
