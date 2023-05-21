@@ -1,6 +1,7 @@
 .vscode
 .DS_STORE
 env.py
+.streamlit/secrets.toml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

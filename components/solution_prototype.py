@@ -1,7 +1,10 @@
 import streamlit as st
 from streamlit_extras.chart_container import chart_container
 from streamlit_extras.colored_header import colored_header
+from streamlit_extras.add_vertical_space import add_vertical_space
+
 from components.expert_bot import ExpertBot
+from components.extractor import Extractor
 
 import plotly.express as px
 import pandas as pd
@@ -61,12 +64,16 @@ class SolutionPrototype:
             },
         }
         
+        self.solution_text_extractor = Extractor()
+        
         if not "solution_custom_text_input" in st.session_state:
             st.session_state["solution_custom_text_input"] = ""
         
         
     def append_solution(self, solution):
-        self.solution_bullet_points.append(solution)
+        solutions_list = self.solution_text_extractor.extract(solution)
+        for el in solutions_list:
+            self.solution_bullet_points.append(el)
         
     def concat_bullet_points(self):
         """Output should be e.g.
@@ -122,6 +129,9 @@ class SolutionPrototype:
     
     def render(self):
         
+        st.markdown("# Solution Notes")
+        st.markdown("These notes contain the key details about your idea. Add details manually or by clicking the '➕' symbols in the chat.")
+        
         # Pop buttons that were clicked in the last iteration
         for idx in self.solution_bullet_points_to_pop:
             self.solution_bullet_points.pop(idx)
@@ -156,18 +166,22 @@ class SolutionPrototype:
         if self.solution_bullet_points:
             st.button("Evaluate Ethics", on_click=self.update_ethics_radar, key=f"solution_eval_ethics_button")
         
+        add_vertical_space(3)
+        st.markdown("# Evaluation")
+        st.markdown("Learn about the risks of your idea and its trustworthiness. Get insights about how to improve your idea.")
+        
         colored_header(
             label="Risk Dimensions",
-            description="See how ethical your idea is within the 6 dimensions of ethics in AI.",
-            color_name="violet-70",
+            description="Rate your idea within 6 guidelines of trustworthiness. You can learn more about these guidelines in the 'Behind the Scenes' page.",
+            color_name="green-70",
         )   
         # RENDER THE PLOTLY RADAR FIGURE
         st.plotly_chart(self.make_ethics_radar(), use_container_width=True)
 
         colored_header(
             label="Identified Risks",
-            description="Read about the reasoning behind the measured risk scores.",
-            color_name="violet-70",
+            description="Get detailed insights into the scores and specific risks.",
+            color_name="green-70",
         )        
         for ethics_dim, risk_dict in self.ethics_dimensions.items():
             st.markdown(f"**{risk_dict['display_name']}:**")

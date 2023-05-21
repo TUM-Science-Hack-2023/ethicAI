@@ -11,8 +11,8 @@ info_section = st.session_state["info_section"]
 
 with st.sidebar:
     add_logo("media/logo.jpg", height=200)
-    add_vertical_space(5)
-    st.markdown("""Authors:\n- Altay Kacan\n- Dominika ...\n- Razin ....\n- Philipp Wulff\n""")
+    add_vertical_space(14)
+    st.markdown("""**Authors:**\n- [Altay Kacan](https://www.linkedin.com/in/altay-kaçan-0383131a3/)\n- [Dominika G.]()\n- [Razin Abdullah](https://www.linkedin.com/in/razin-abdullah/)\n- [Philipp Wulff](https://www.linkedin.com/in/philippwulff/)\n""")
 
 
 info_section.render()

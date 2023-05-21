@@ -27,26 +27,26 @@ st.set_page_config(
     page_title="EthicAI - Demo",
     page_icon=":robot:"
 )
-st.sidebar.header("EthicAI")
 with st.sidebar:
     add_logo("media/logo.jpg", height=200)
     st.write("# Welcome to EthicAI! 👋")
-    add_vertical_space(5)
-    st.markdown("""Authors:\n- Altay Kacan\n- Dominika ...\n- Razin ....\n- Philipp Wulff\n""")
+    st.write("Innovative solution to solve educational problems for teachers, lectures, etc. at all levels including built-in risk assesment with detailed anaylsis.")
+    st.info("You may experience errors with certain features if many users access it at the same time.")
+    
+    # add_vertical_space(1)
+    # st.markdown("""**Authors:**\n- [Altay Kacan](https://www.linkedin.com/in/altay-kaçan-0383131a3/)\n- [Dominika G.]()\n- [Razin Abdullah](https://www.linkedin.com/in/razin-abdullah/)\n- [Philipp Wulff](https://www.linkedin.com/in/philippwulff/)\n""")
 
 
 # RENDER THE PAGE
 
 add_vertical_space(3)
 st.markdown("# Chat")
-st.markdown("Talk to the bot to find a solution to your problem.")
+st.markdown("Have a chat with your personal AI ideation assistant to find a creative solution to your problem. If you like an idea, use the '➕' symbol to save it to the *Solution Notes*. Scroll down to view the *Solution Notes*.")
 
 st.write("---")
 chat_bot.render(solution_prototype.append_solution)
 st.write("---")
 
 add_vertical_space(3)
-st.markdown("# Evaluation")
-st.markdown("See how ethical your solution is and how it can be improved.")
 
 solution_prototype.render()
