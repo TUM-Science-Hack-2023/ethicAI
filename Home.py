@@ -30,7 +30,7 @@ st.set_page_config(
 with st.sidebar:
     add_logo("media/logo.jpg", height=200)
     st.write("# Welcome to EthicAI! 👋")
-    st.write("Innovative solution to solve educational problems for teachers, lectures, etc. at all levels including built-in risk assesment with detailed anaylsis.")
+    st.write("EthicAI *(eh·thuh·kl)* is the innovative, interactive problem solver for teachers, lectures, etc. at all levels with built-in risk assesment of the idea.")
     st.info("You may experience errors with certain features if many users access it at the same time.")
     
     # add_vertical_space(1)
