@@ -19,6 +19,10 @@ class Extractor():
         summarize them as bullet points.
         """
 
+        # Really hacky way to avoid errors with text shorter than 250 characters
+        if len(text_to_extract) <= 250:
+            text_to_extract += " " * (250 - len(text_to_extract))
+
         response = self.co.summarize(text=text_to_extract,
                                      length="medium",
                                      format="bullets",
