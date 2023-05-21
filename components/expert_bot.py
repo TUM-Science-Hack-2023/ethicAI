@@ -15,12 +15,9 @@ The main principles that we are considering are:
 import openai
 import json
 import os
-import sys
 import cohere
 import streamlit as st 
 
-sys.path.append("..")
-from env import *
 
 # Get API key
 
@@ -179,7 +176,7 @@ class ExpertBot():
         self.summary_prompt = None
 
         # Cohere object
-        self.co = cohere.Client(COHERE_KEY)
+        self.co = cohere.Client(st.secrets["COHERE_KEY"])
 
         if API_idx == 0:
             key_name = "OPEN_AI_KEY"
