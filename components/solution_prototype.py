@@ -35,7 +35,7 @@ class SolutionPrototype:
                 "display_name": "Human-centred Values & Fairness",
             },
             "transparency": {
-                "expert_bot": ExpertBot("transparency", 0),
+                "expert_bot": ExpertBot("transparency", 1),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
@@ -49,14 +49,14 @@ class SolutionPrototype:
                 "display_name": "Robustness & Safety", # "Robustness, Security, and Safety"
             },
             "accountable": {
-                "expert_bot": ExpertBot("accountable", 1),
+                "expert_bot": ExpertBot("accountable", 2),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
                 "display_name": "Accountability",
             },
             "inclusive": {
-                "expert_bot": ExpertBot("inclusive", 1),
+                "expert_bot": ExpertBot("inclusive", 2),
                 "score": 0,
                 "risk": "",
                 "risk_short": "",
