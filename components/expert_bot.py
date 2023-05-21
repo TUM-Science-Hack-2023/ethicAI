@@ -182,6 +182,10 @@ class ExpertBot():
             key_name = "OPEN_AI_KEY"
         elif API_idx == 1:
             key_name = "OPEN_AI_KEY2"
+        elif API_idx == 2:
+            key_name = "OPEN_AI_KEY3"
+        elif API_idx == 3:
+            key_name == "OPEN_AI_KEY4"
         else:
             raise NotImplementedError
         
