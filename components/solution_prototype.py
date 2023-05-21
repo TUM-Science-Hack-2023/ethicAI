@@ -93,7 +93,6 @@ class SolutionPrototype:
     def update_ethics_radar(self):
         
         free_text = self.concat_bullet_points()
-        cnt = 0
         successful_evals = 0
         for dim, dim_dict in self.ethics_dimensions.items():
             print("dim", dim)
@@ -111,9 +110,7 @@ class SolutionPrototype:
                 continue
             
             successful_evals += 1
-            cnt += 1
-            if cnt == 2:
-                break
+
         if successful_evals == len(self.ethics_dimensions):
             st.sidebar.success("Calculated all ethics scores!")
         elif successful_evals > 0:
