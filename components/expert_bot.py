@@ -16,13 +16,13 @@ import openai
 import json
 import os
 import sys
-import cohere 
+import cohere
+import streamlit as st 
 
 sys.path.append("..")
 from env import *
 
 # Get API key
-openai.api_key  = OPEN_AI_KEY
 
 prompts = {
 "inclusive":{"title": "Inclusive Growth, Sustainable Development, and Well-being",
@@ -165,7 +165,7 @@ prompts = {
         }
 }
 class ExpertBot():
-    def __init__(self, expertise : str) -> None:
+    def __init__(self, expertise : str, API_idx : int) -> None:
         # These are the specific prompts that will be used for the specific expert model
         self.prompts = prompts
         assert expertise in self.prompts.keys(), "Provided expertise is not recognized! Please check available ones in components/expert_bot.py"
@@ -180,6 +180,15 @@ class ExpertBot():
 
         # Cohere object
         self.co = cohere.Client(COHERE_KEY)
+
+        if API_idx == 0:
+            key_name = "OPEN_AI_KEY"
+        elif API_idx == 1:
+            key_name = "OPEN_AI_KEY2"
+        else:
+            raise NotImplementedError
+        
+        openai.api_key  = st.secrets[key_name] 
 
     def get_evaluation(self, use_case, model="gpt-3.5-turbo"):
         """

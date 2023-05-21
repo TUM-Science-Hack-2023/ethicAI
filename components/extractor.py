@@ -4,15 +4,12 @@ chat messages.
 """
 
 import cohere   
-import sys
-
-sys.path.append("..")
-from env import *
+import streamlit as st
 
 
 class Extractor():
     def __init__(self) -> None:
-        self.co = cohere.Client(COHERE_KEY)
+        self.co = cohere.Client(st.secrets["COHERE_KEY"])
 
     
     def extract(self, text_to_extract):

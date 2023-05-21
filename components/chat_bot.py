@@ -10,9 +10,7 @@ DUMMY_CHAT_HISTORY =  [
     {'role':'assistant', 'content':'Why did the chicken cross the road'},   
     {'role':'user', 'content':'I don\'t know'}  
 ]
-sys.path.append("..")
-from env import *
-openai.api_key  = OPEN_AI_KEY
+openai.api_key  = st.secrets["OPEN_AI_KEY"]
 
 class ChatBot: 
     def __init__(self) -> None:
