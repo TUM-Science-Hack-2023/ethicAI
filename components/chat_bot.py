@@ -97,10 +97,12 @@ class ChatBot:
             'content': user_input
         })
         # do API call
+        response = "Sorry, too many users access my service right now and there is a rate limit for my API."
         try:
             response = self.get_completion_from_history(self.chat_history)
         except Exception as e:
-            st.sidebar.error(f"Retrieving the chatbot's response failed with error: {e}")
+            st.sidebar.error(f"Retrieving the chatbot's response failed. Please try again.")
+            # st.sidebar.error(f"Retrieving the chatbot's response failed with error: {e}")
 
         # dummy response
         # response = self.get_completion_from_history_dummy(self.chat_history)
@@ -111,7 +113,7 @@ class ChatBot:
         
         def user_msg(content, num):
             # Possible avatar styles: https://github.com/AI-Yash/st-chat/issues/29#issuecomment-1547049574
-            message(content, is_user=True, avatar_style="adventurer", key=f"user_msg_{num}")
+            message(content, is_user=True, avatar_style="avataaars", key=f"user_msg_{num}")
             
         def bot_msg(content, num):
             col1, col2 = st.columns([1, 12])

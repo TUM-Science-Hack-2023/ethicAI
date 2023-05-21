@@ -17,10 +17,11 @@ pip3 install cohere
 
 ## Secrets
 
-Secrets are the API keys needed to access the LLM APIs. To use them locally, create a `.streamlit/secrets.toml` file under the project root and add the following contents:
+Secrets are the API keys needed to access the LLM APIs ([docs](https://docs.streamlit.io/streamlit-community-cloud/get-started/deploy-an-app/connect-to-data-sources/secrets-management)). To use them locally, create a `.streamlit/secrets.toml` file under the project root and add the following contents:
 
 ```toml
 # Everything in this section will be available as an environment variable
+# Use thse secret keys with e.g. st.secrets["OPEN_AI_KEY"]
 
 COHERE_KEY = "YOUR KEY GOES HERE"
 OPEN_AI_KEY = "YOUR KEY GOES HERE" 
