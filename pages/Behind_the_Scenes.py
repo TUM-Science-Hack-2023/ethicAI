@@ -9,6 +9,14 @@ if "info_section" not in st.session_state:
     
 info_section = st.session_state["info_section"]
 
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
 with st.sidebar:
     add_logo("media/logo.jpg", height=200)
     add_vertical_space(14)

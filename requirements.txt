@@ -1,0 +1,9 @@
+streamlit  
+streamlit-chat  
+streamlit-extras
+
+pandas
+plotly
+
+openai
+cohere

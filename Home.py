@@ -25,7 +25,7 @@ solution_prototype = st.session_state["solution_prototype"]
 
 st.set_page_config(
     page_title="EthicAI - Demo",
-    page_icon=":robot:"
+    page_icon="🤖"
 )
 with st.sidebar:
     add_logo("media/logo.jpg", height=200)
@@ -36,6 +36,13 @@ with st.sidebar:
     # add_vertical_space(1)
     # st.markdown("""**Authors:**\n- [Altay Kacan](https://www.linkedin.com/in/altay-kaçan-0383131a3/)\n- [Dominika G.]()\n- [Razin Abdullah](https://www.linkedin.com/in/razin-abdullah/)\n- [Philipp Wulff](https://www.linkedin.com/in/philippwulff/)\n""")
 
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
 # RENDER THE PAGE
 

@@ -63,6 +63,11 @@ class SolutionPrototype:
                 "display_name": "Inclusive Growth & Sustainable Devpt.", # "Inclusive Growth, Sustainable Development, and Well-being"
             },
         }
+        # Add default values to the fields
+        for k in self.ethics_dimensions:
+            self.ethics_dimensions[k]["score"] = 5
+            self.ethics_dimensions[k]["risk_short"] = "Press the 'Evaluate' button to see what the experts think about your idea!"
+            self.ethics_dimensions[k]["risk"] = "..."
         
         self.solution_text_extractor = Extractor()
         
@@ -101,7 +106,7 @@ class SolutionPrototype:
                 # st.sidebar.error(f"Evaluation retrieval from expert:{dim} failed with error: {e}")
                 st.sidebar.error(f"Evaluation retrieval from the {dim} expoert failed with error. Please try again.")
                 self.ethics_dimensions[dim]["score"] = 0
-                self.ethics_dimensions[dim]["risk"] = "..."
+                self.ethics_dimensions[dim]["risk"] = "Ooooor, you can invest a couple of million dollars in us so we can get a nice and shiny production key"
                 self.ethics_dimensions[dim]["risk_short"] = "Please have some patience, there are rate limits on how many calls we can make..."
                 continue
             
@@ -142,14 +147,15 @@ class SolutionPrototype:
         self.solution_bullet_points_to_pop = []
         
         for i, sbp in enumerate(self.solution_bullet_points):
-            col1, col2, col3 = st.columns([10, 1, 1])
+            # col1, col2, col3 = st.columns([10, 1, 1])
+            col1, col3 = st.columns([11, 1])
             with col1:
-                if len(sbp) > 70:
-                    st.text_area("No-show", value=sbp, disabled=True, label_visibility="collapsed", key=f"solution_text_field_{i}")
+                if len(sbp) > 85:
+                    st.text_area("No-show", value=sbp, disabled=False, label_visibility="collapsed", key=f"solution_text_field_{i}")
                 else:
-                    st.text_input("No-show", value=sbp, disabled=True, label_visibility="collapsed", key=f"solution_text_field_{i}")
-            with col2:
-                st.button("🖋️", key=f"solution_edit_button_{i}")
+                    st.text_input("No-show", value=sbp, disabled=False, label_visibility="collapsed", key=f"solution_text_field_{i}")
+            # with col2:
+            #     st.button("🖋️", key=f"solution_edit_button_{i}")
             with col3:
                 if st.button("❌", key=f"solution_del_button_{i}"):
                     self.solution_bullet_points_to_pop.append(i)

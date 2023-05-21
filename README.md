@@ -2,6 +2,7 @@
 
 ## Installation
 
+We need these packages:
 ```
 pip3 install streamlit
 pip3 install streamlit-chat
@@ -13,6 +14,8 @@ pip3 install plotly
 pip3 install --upgrade openai
 pip3 install cohere
 ```
+
+You can install all of them using `pip install -r requirements.txt`.
 
 ## Running
 
