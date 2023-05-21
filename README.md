@@ -14,6 +14,14 @@ pip3 install --upgrade openai
 pip3 install cohere
 ```
 
+## Running
+
+From the root folder run:
+
+```
+streamlit run Home.py
+```
+
 
 ## Secrets
 
