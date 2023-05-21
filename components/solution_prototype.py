@@ -106,7 +106,7 @@ class SolutionPrototype:
                 # st.sidebar.error(f"Evaluation retrieval from expert:{dim} failed with error: {e}")
                 st.sidebar.error(f"Evaluation retrieval from the {dim} expoert failed with error. Please try again.")
                 self.ethics_dimensions[dim]["score"] = 0
-                self.ethics_dimensions[dim]["risk"] = "..."
+                self.ethics_dimensions[dim]["risk"] = "Ooooor, you can invest a couple of million dollars in us so we can get a nice and shiny production key"
                 self.ethics_dimensions[dim]["risk_short"] = "Please have some patience, there are rate limits on how many calls we can make..."
                 continue
             
