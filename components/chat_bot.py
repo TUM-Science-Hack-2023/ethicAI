@@ -10,7 +10,7 @@ DUMMY_CHAT_HISTORY =  [
     {'role':'assistant', 'content':'Why did the chicken cross the road'},   
     {'role':'user', 'content':'I don\'t know'}  
 ]
-openai.api_key  = st.secrets["OPEN_AI_KEY"]
+openai.api_key  = st.secrets["OPEN_AI_KEY4"]
 
 class ChatBot: 
     def __init__(self) -> None:
