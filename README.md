@@ -36,7 +36,10 @@ Secrets are the API keys needed to access the LLM APIs ([docs](https://docs.stre
 
 COHERE_KEY = "YOUR KEY GOES HERE"
 OPEN_AI_KEY = "YOUR KEY GOES HERE" 
-OPEN_AI_KEY2 = "YOUR KEY GOES HERE" # Second key to deal with rate limits
+# More keys to deal with rate limits
+OPEN_AI_KEY2 = "YOUR KEY GOES HERE" 
+OPEN_AI_KEY3 = "YOUR KEY GOES HERE" 
+OPEN_AI_KEY4 = "YOUR KEY GOES HERE" 
 ```
 
 When hosting on the Streamlit community platform, secrets can be added manually.
