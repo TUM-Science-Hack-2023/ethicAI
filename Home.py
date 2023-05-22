@@ -28,7 +28,7 @@ st.set_page_config(
     page_icon="🤖"
 )
 with st.sidebar:
-    add_logo("media/logo.jpg", height=200)
+    add_logo("media/logo.jpg", height=300)
     st.write("# Welcome to EthicAI! 👋")
     st.write("EthicAI *(eh·thuh·kl)* is the innovative, interactive problem solver for teachers, lectures, etc. at all levels with built-in risk assesment of the idea.")
     st.info("You may experience errors with certain features if many users access this page at the same time.")
