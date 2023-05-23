@@ -1,5 +1,9 @@
 # ethicAI
 
+## Demo
+[![Watch the video](https://img.youtube.com/vi/Z30ljlrpEiA/maxresdefault.jpg)](https://youtu.be/Z30ljlrpEiA)
+
+
 ## Installation
 
 We need these packages:
