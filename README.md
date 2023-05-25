@@ -1,5 +1,9 @@
 # ethicAI
 
+## Demo
+
+https://github.com/TUM-Science-Hack-2023/ethicAI/blob/main/media/EthicAl%20-%20Demo.mp4
+
 ## Installation
 
 We need these packages:
